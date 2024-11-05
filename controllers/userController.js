@@ -52,11 +52,14 @@ const loginUser = async (req, res, next) => {
 
     const { password: pass, ...rest } = validUser._doc;
 
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      success: true,
-      message: "Logged in successfully",
-      rest,
-    });
+    res
+      .cookie("access_token", token, { httpOnly: true, sameSite: "none" })
+      .status(200)
+      .json({
+        success: true,
+        message: "Logged in successfully",
+        rest,
+      });
   } catch (error) {
     next(error);
   }
